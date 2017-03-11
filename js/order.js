@@ -1,13 +1,17 @@
 $(document).ready(function() {
-
-    var subtotes = 0
+    event.preventDefault();
+    let subtotes = 0
 
     function almostTotal() {
-        var realVal = Number(($(event.target).parent().parent().find('p').text().replace(/[^0-9\.]+/g, "")))
-        var subTotal = subtotes += realVal
-        console.log(subTotal)
-        return subTotal.toFixed(2)
+        var Val = Number(($(event.target).parent().parent().find('p').text().replace(/[^0-9\.]+/g, "")))
+        // console.log(Val)
+        var subTotal = (subtotes += Val).toFixed(2)
+
+        // console.log(subTotal)
+        return subTotal
     }
+
+
     $('.addItem').click(function() {
         var row = $('<tr>')
         var item = $('<td class="left-align">' + $(event.target).parent().parent().find('.card-title').text() + '</td>')
@@ -16,9 +20,11 @@ $(document).ready(function() {
         row.append(price)
         $('tbody').append(row)
         var subtotalValue = $('#subtotal').text(almostTotal())
-        var taxValue = $('#tax').text(((almostTotal() * 0.04).toFixed(2)))
-        var totalValue = (parseInt(subtotalValue.text()) + parseInt(taxValue.text()))
-        $("#total").text(totalValue)
+        var tax = (subtotalValue.text() * 0.04).toFixed(2)
+        console.log(tax)
+        var taxValue = $('#tax').text(tax)
+        var totalValue = (Number(subtotalValue.text()) + Number(taxValue.text()))
+        $("#total").text(totalValue.toFixed(2))
     })
 
     //toast
@@ -29,7 +35,7 @@ $(document).ready(function() {
         var numberInput = $('#phone_number').val()
         var addressInput = $('#address').val()
 
-        if (subTotes.length > 0 && nameInput.length > 0 && addressInput.length > 0 && numberInput.length > 0) {
+        if (subtotes.length > 0 && nameInput.length > 0 && addressInput.length > 0 && numberInput.length > 0) {
             alert('Woo Hoo Fiesta Time! Your order is being processed')
         } else {
             alert('Ay yi yi.Your order cannot be complete. Please fill in the information correctly.')
